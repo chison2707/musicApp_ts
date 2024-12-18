@@ -4,11 +4,6 @@ const favoriteSongSchema = new mongoose.Schema(
     {
         userId: String,
         songId: String,
-        deleted: {
-            type: Boolean,
-            default: false,
-        },
-        deletedAt: Date,
     },
     {
         timestamps: true,
