@@ -20,3 +20,18 @@ nav(class="navbar navbar-expand-lg bg-body-tertiary")
             a.nav-link(href='/users/login') Đăng nhập
           li.nav-item
             a.nav-link(href='/users/register') Đăng ký
+      form(
+        role='search'
+        class="d-flex"
+        action="/search/result"
+        method="GET"
+        )
+        input(
+          type='search' 
+          class='form-control me-2'
+          placeholder='Nhập từ khóa ...'
+          name='keyword'
+          value=keyWord 
+          aria-label='Search'
+          )
+        button.btn.btn-outline-success(type='submit') Tìm
