@@ -8,6 +8,7 @@ import flash from 'express-flash';
 import session from 'express-session';
 import path from 'path';
 import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
 import adminRoutes from './routes/admin/index.route';
 import { systemConfig } from './config/config';
 
@@ -20,6 +21,7 @@ const port: string | number = process.env.PORT || 3000;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 
 app.set("views", "./views");

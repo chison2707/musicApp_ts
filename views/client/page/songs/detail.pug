@@ -37,9 +37,11 @@ block main
                     .inner-desc
                         .inner-label Mô tå
                         .inner-text
-                        |   #{song.description}
+                        |   !{song.description}
 
-                    .inner-desc
+                    .inner-desc(
+                        style ="white-space: pre-line;"
+                    )
                         .inner-label Lời bài hát
                         .inner-text
                         |    !{song.lyrics}
