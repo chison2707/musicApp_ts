@@ -29,3 +29,20 @@ export const create = async (req: Request, res: Response) => {
         singers: singers
     });
 };
+
+export const createPost = async (req: Request, res: Response) => {
+    const datasong = {
+        title: req.body.title,
+        topicId: req.body.topicId,
+        singerId: req.body.singerId,
+        description: req.body.description,
+        lyrics: req.body.lyrics,
+        status: req.body.status,
+        avatar: req.body.avatar
+    }
+
+    const song = new Song(datasong);
+    await song.save();
+
+    res.redirect("/admin/songs");
+};
