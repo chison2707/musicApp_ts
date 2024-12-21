@@ -6,7 +6,10 @@ import clientRoutes from './routes/client/index.route';
 import bodyParser from 'body-parser';
 import flash from 'express-flash';
 import session from 'express-session';
+import path from 'path';
 import cookieParser from 'cookie-parser';
+import adminRoutes from './routes/admin/index.route';
+import { systemConfig } from './config/config';
 
 dotenv.config();
 database.connect();
@@ -22,6 +25,13 @@ app.use(express.static("public"));
 app.set("views", "./views");
 app.set('view engine', 'pug');
 
+// TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// end TinyMCE
+
+// app local variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
 // flash
 app.use(cookieParser("GFDFGDFGDGDF"));
 app.use(session({
@@ -33,7 +43,11 @@ app.use(session({
 app.use(flash());
 // end flash
 
+// client
 clientRoutes(app);
+
+// admin
+adminRoutes(app);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
