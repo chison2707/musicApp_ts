@@ -19,6 +19,7 @@
     "express-session": "^1.18.1",
     "md5": "^2.3.0",
     "mongoose": "^8.9.1",
+    "mongoose-slug-updater": "^3.3.0",
     "nodemon": "^3.1.9",
     "pug": "^3.0.3",
     "tinymce": "^7.6.0",
