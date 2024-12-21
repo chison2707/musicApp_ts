@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Song from "../../models/song.model";
 import Topic from "../../models/topic.model";
 import Singer from "../../models/singer.model";
+import { systemConfig } from "../../config/config";
 
 export const index = async (req: Request, res: Response) => {
     const songs = await Song.find({
@@ -31,6 +32,14 @@ export const create = async (req: Request, res: Response) => {
 };
 
 export const createPost = async (req: Request, res: Response) => {
+    let avatar = "";
+    let audio = "";
+    if (req.body.avatar) {
+        avatar = req.body.avatar[0];
+    }
+    if (req.body.audio) {
+        audio = req.body.audio[0];
+    }
     const datasong = {
         title: req.body.title,
         topicId: req.body.topicId,
@@ -38,11 +47,13 @@ export const createPost = async (req: Request, res: Response) => {
         description: req.body.description,
         lyrics: req.body.lyrics,
         status: req.body.status,
-        avatar: req.body.avatar
+        avatar: avatar,
+        audio: audio
     }
+
 
     const song = new Song(datasong);
     await song.save();
 
-    res.redirect("/admin/songs");
+    res.redirect(`/${systemConfig.prefixAdmin}/songs`);
 };
