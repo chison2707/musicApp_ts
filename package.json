@@ -6,8 +6,15 @@
   "scripts": {
     "start": "nodemon index.ts",
     "build": "tsc && node coppy-dir.js",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -40,6 +47,7 @@
     "@types/streamifier": "^0.1.2",
     "@types/unidecode": "^0.1.3",
     "fs-extra": "^11.2.0",
+    "pre-commit": "^1.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }
