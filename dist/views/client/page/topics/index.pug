@@ -1,0 +1,18 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head(pageTitle) 
+
+        .row
+            each item in topics
+                .col-4.mb-3
+                    .card(style="width: 18rem;")
+                        img(src=item.avatar)
+                        .card-body
+                            h5.card-title #{item.title}
+                            p.card-text #{item.description}
+                            a.btn.btn-primary(href=`/songs/${item.slug}`) Xem chi tiết
