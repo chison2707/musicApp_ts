@@ -33,20 +33,9 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-const topic_route_1 = require("./topic.route");
-const song_route_1 = require("./song.route");
-const user_route_1 = require("./user.route");
-const favorite_song_route_1 = require("./favorite-song.route");
-const search_route_1 = require("./search.route");
-const home_route_1 = require("./home.route");
-const userMiddleware = __importStar(require("../../middlewares/use.middleware"));
-const clientRoutes = (app) => {
-    app.use(userMiddleware.infoUser);
-    app.use('/', home_route_1.homeRoutes);
-    app.use('/topics', topic_route_1.topicRoutes);
-    app.use('/songs', song_route_1.songRoutes);
-    app.use('/users', user_route_1.userRoutes);
-    app.use('/favorite-songs', favorite_song_route_1.favoriteSongRoutes);
-    app.use('/search', search_route_1.searchRoutes);
-};
-exports.default = clientRoutes;
+exports.homeRoutes = void 0;
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const controller = __importStar(require("../../controllers/client/home.controller"));
+router.get('/', controller.index);
+exports.homeRoutes = router;
