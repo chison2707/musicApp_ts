@@ -17,7 +17,7 @@ const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 // [GET]/favorite-songs
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //   lấy ra bài hát nhiều like nhất
+    //   lấy ra 10 bài hát nhiều like nhất
     const songLikes = yield song_model_1.default.find({
         deleted: false,
     }).sort({ like: "desc" }).limit(10);
@@ -29,9 +29,22 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         song["inforSinger"] = inforSinger;
     }
+    //   lấy ra 10 bài hát nhiều like nhất
+    const songListens = yield song_model_1.default.find({
+        deleted: false,
+    }).sort({ listen: "desc" }).limit(10);
+    for (const song of songListens) {
+        const inforSinger = yield singer_model_1.default.findOne({
+            _id: song.singerId,
+            status: "active",
+            deleted: false
+        });
+        song["inforSinger"] = inforSinger;
+    }
     res.render("client/page/home/index", {
-        pageTitle: "Favorite Songs",
-        songLikes: songLikes
+        pageTitle: "Trang chủ",
+        songLikes: songLikes,
+        songListens: songListens
     });
 });
 exports.index = index;
