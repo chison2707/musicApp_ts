@@ -37,5 +37,6 @@ exports.favoriteSongRoutes = void 0;
 const express_1 = require("express");
 const router = (0, express_1.Router)();
 const controller = __importStar(require("../../controllers/client/favorite-song.controller"));
-router.get('/', controller.index);
+const authMiddleware = __importStar(require("../../middlewares/client/auth.middleware"));
+router.get('/', authMiddleware.requireAuth, controller.index);
 exports.favoriteSongRoutes = router;

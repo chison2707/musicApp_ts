@@ -68,12 +68,12 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     if (user.status == "inactive") {
         req.flash("error", "Tài khoản đã bị khóa!");
-        res.redirect("back");
+        res.redirect("/");
         return;
     }
     res.cookie("tokenUser", user.tokenUser);
     req.flash("success", "Đăng nhập thành công!");
-    res.redirect(`/topics`);
+    res.redirect("back");
 });
 exports.loginPost = loginPost;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
