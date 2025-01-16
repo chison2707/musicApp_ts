@@ -18,7 +18,9 @@ const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 // [GET]/favorite-songs
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const favoriteSongs = yield favorite_song_model_1.default.find({});
+    const favoriteSongs = yield favorite_song_model_1.default.find({
+        userId: res.locals.user.id
+    });
     for (const item of favoriteSongs) {
         const infoSong = yield song_model_1.default.findOne({
             _id: item["songId"]

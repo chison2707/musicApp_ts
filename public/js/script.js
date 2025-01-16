@@ -72,11 +72,32 @@ if (buttonLike) {
 }
 //end button like
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+    }
+    return null;
+}
+
+// Lấy giá trị tokenUser
+const tokenUser = getCookie('tokenUser');
+
 // button favorite
 const listbuttonFavorite = document.querySelectorAll("[button-favorite]");
 if (listbuttonFavorite.length > 0) {
     listbuttonFavorite.forEach(buttonFavorite => {
+        if (!tokenUser) {
+            buttonFavorite.classList.remove("active");
+        }
+
         buttonFavorite.addEventListener("click", () => {
+            if (!tokenUser) {
+                window.location.href = "/users/login";
+                return;
+            }
+
             const idSong = buttonFavorite.getAttribute("button-favorite");
             const isActive = buttonFavorite.classList.contains("active");
             const typeFavorite = isActive ? "unfavorite" : "favorite"

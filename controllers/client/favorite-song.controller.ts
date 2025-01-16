@@ -5,7 +5,9 @@ import Singer from '../../models/singer.model';
 
 // [GET]/favorite-songs
 export const index = async (req: Request, res: Response) => {
-    const favoriteSongs = await FavoriteSong.find({});
+    const favoriteSongs = await FavoriteSong.find({
+        userId: res.locals.user.id
+    });
 
     for (const item of favoriteSongs) {
         const infoSong = await Song.findOne({

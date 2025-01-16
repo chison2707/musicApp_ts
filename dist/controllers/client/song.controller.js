@@ -101,6 +101,7 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     switch (typeFavorite) {
         case "favorite":
             const existFavorite = yield favorite_song_model_1.default.findOne({
+                userId: res.locals.user.id,
                 songId: idSong
             });
             if (!existFavorite) {
@@ -113,6 +114,7 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             break;
         case "unfavorite":
             yield favorite_song_model_1.default.deleteOne({
+                userId: res.locals.user.id,
                 songId: idSong
             });
             break;

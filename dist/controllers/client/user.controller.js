@@ -78,6 +78,6 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.loginPost = loginPost;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.clearCookie("tokenUser");
-    res.redirect(`/topics`);
+    res.redirect(`/`);
 });
 exports.logout = logout;

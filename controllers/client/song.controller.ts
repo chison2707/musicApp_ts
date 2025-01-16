@@ -100,6 +100,7 @@ export const favorite = async (req: Request, res: Response) => {
     switch (typeFavorite) {
         case "favorite":
             const existFavorite = await FavoriteSong.findOne({
+                userId: res.locals.user.id,
                 songId: idSong
             });
             if (!existFavorite) {
@@ -112,6 +113,7 @@ export const favorite = async (req: Request, res: Response) => {
             break;
         case "unfavorite":
             await FavoriteSong.deleteOne({
+                userId: res.locals.user.id,
                 songId: idSong
             });
             break;
