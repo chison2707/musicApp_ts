@@ -73,7 +73,7 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     res.cookie("tokenUser", user.tokenUser);
     req.flash("success", "Đăng nhập thành công!");
-    res.redirect("back");
+    res.redirect("/");
 });
 exports.loginPost = loginPost;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

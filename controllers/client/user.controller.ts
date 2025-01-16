@@ -66,7 +66,7 @@ export const loginPost = async (req: Request, res: Response) => {
     res.cookie("tokenUser", user.tokenUser);
 
     req.flash("success", "Đăng nhập thành công!");
-    res.redirect("back");
+    res.redirect("/");
 }
 
 export const logout = async (req: Request, res: Response) => {

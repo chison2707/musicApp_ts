@@ -105,7 +105,7 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             if (!existFavorite) {
                 const record = new favorite_song_model_1.default({
-                    // userId:"",
+                    userId: res.locals.user.id,
                     songId: idSong
                 });
                 yield record.save();

@@ -104,7 +104,7 @@ export const favorite = async (req: Request, res: Response) => {
             });
             if (!existFavorite) {
                 const record = new FavoriteSong({
-                    // userId:"",
+                    userId: res.locals.user.id,
                     songId: idSong
                 });
                 await record.save();
