@@ -124,7 +124,7 @@ export const forgotPassPost = async (req: Request, res: Response) => {
     res.redirect(`/users/password/otp?email=${email}`);
 }
 
-// [GET]/user/password/otp
+// [GET]/users/password/otp
 export const otpPassword = async (req: Request, res: Response) => {
     const email = req.query.email;
 
@@ -134,7 +134,7 @@ export const otpPassword = async (req: Request, res: Response) => {
     });
 }
 
-// [POST]/user/password/otp
+// [POST]/users/password/otp
 export const otpPasswordPost = async (req: Request, res: Response) => {
     const email = req.body.email;
     const otp = req.body.otp;
@@ -158,14 +158,14 @@ export const otpPasswordPost = async (req: Request, res: Response) => {
     res.redirect(`/users/password/reset`);
 }
 
-// [GET]/user/password/reset
+// [GET]/users/password/reset
 export const resetPassword = async (req: Request, res: Response) => {
     res.render("client/page/user/reset-password", {
         pageTitle: "Đặt lại mật khẩu"
     });
 }
 
-// [POST]/user/password/reset
+// [POST]/users/password/reset
 export const resetPasswordPost = async (req: Request, res: Response) => {
     const password = req.body.password;
     const tokenUser = req.cookies.tokenUser;
@@ -178,4 +178,11 @@ export const resetPasswordPost = async (req: Request, res: Response) => {
 
     req.flash("success", "Đổi mật khẩu thành công!!!");
     res.redirect("/");
+}
+
+// [GET]/users/infor
+export const infor = async (req: Request, res: Response) => {
+    res.render("client/page/user/infor", {
+        pageTitle: "Thông tin cá nhân"
+    });
 }

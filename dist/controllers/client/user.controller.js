@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetPasswordPost = exports.resetPassword = exports.otpPasswordPost = exports.otpPassword = exports.forgotPassPost = exports.forgotPass = exports.logout = exports.loginPost = exports.registerPost = exports.register = exports.login = void 0;
+exports.infor = exports.resetPasswordPost = exports.resetPassword = exports.otpPasswordPost = exports.otpPassword = exports.forgotPassPost = exports.forgotPass = exports.logout = exports.loginPost = exports.registerPost = exports.register = exports.login = void 0;
 const user_model_1 = __importDefault(require("../../models/user.model"));
 const md5_1 = __importDefault(require("md5"));
 const generateHelper = __importStar(require("../../helper/generate"));
@@ -159,7 +159,7 @@ const forgotPassPost = (req, res) => __awaiter(void 0, void 0, void 0, function*
     res.redirect(`/users/password/otp?email=${email}`);
 });
 exports.forgotPassPost = forgotPassPost;
-// [GET]/user/password/otp
+// [GET]/users/password/otp
 const otpPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.query.email;
     res.render("client/page/user/otp-password", {
@@ -168,7 +168,7 @@ const otpPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 });
 exports.otpPassword = otpPassword;
-// [POST]/user/password/otp
+// [POST]/users/password/otp
 const otpPasswordPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.body.email;
     const otp = req.body.otp;
@@ -189,14 +189,14 @@ const otpPasswordPost = (req, res) => __awaiter(void 0, void 0, void 0, function
     res.redirect(`/users/password/reset`);
 });
 exports.otpPasswordPost = otpPasswordPost;
-// [GET]/user/password/reset
+// [GET]/users/password/reset
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.render("client/page/user/reset-password", {
         pageTitle: "Đặt lại mật khẩu"
     });
 });
 exports.resetPassword = resetPassword;
-// [POST]/user/password/reset
+// [POST]/users/password/reset
 const resetPasswordPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const password = req.body.password;
     const tokenUser = req.cookies.tokenUser;
@@ -209,3 +209,10 @@ const resetPasswordPost = (req, res) => __awaiter(void 0, void 0, void 0, functi
     res.redirect("/");
 });
 exports.resetPasswordPost = resetPasswordPost;
+// [GET]/users/infor
+const infor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render("client/page/user/infor", {
+        pageTitle: "Thông tin cá nhân"
+    });
+});
+exports.infor = infor;
