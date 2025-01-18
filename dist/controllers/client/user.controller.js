@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.infor = exports.resetPasswordPost = exports.resetPassword = exports.otpPasswordPost = exports.otpPassword = exports.forgotPassPost = exports.forgotPass = exports.logout = exports.loginPost = exports.registerPost = exports.register = exports.login = void 0;
+exports.editPatch = exports.edit = exports.infor = exports.resetPasswordPost = exports.resetPassword = exports.otpPasswordPost = exports.otpPassword = exports.forgotPassPost = exports.forgotPass = exports.logout = exports.loginPost = exports.registerPost = exports.register = exports.login = void 0;
 const user_model_1 = __importDefault(require("../../models/user.model"));
 const md5_1 = __importDefault(require("md5"));
 const generateHelper = __importStar(require("../../helper/generate"));
@@ -216,3 +216,30 @@ const infor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.infor = infor;
+// [GET]/users/edit
+const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render("client/page/user/edit", {
+        pageTitle: "Chỉnh sửa thông tin cá nhân"
+    });
+});
+exports.edit = edit;
+// [PATCH]/users/edit
+const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { fullName, phone, password } = req.body;
+        const updateData = { fullName, phone };
+        if (password) {
+            updateData.password = (0, md5_1.default)(password);
+        }
+        yield user_model_1.default.updateOne({
+            tokenUser: req.cookies.tokenUser
+        }, updateData);
+        req.flash("success", "Đổi thông tin cá nhân thành công!!!");
+        res.redirect("/");
+    }
+    catch (error) {
+        req.flash("error", "Đã xảy ra lỗi. Vui lòng thử lại!");
+        res.redirect("back");
+    }
+});
+exports.editPatch = editPatch;

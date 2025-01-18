@@ -186,3 +186,34 @@ export const infor = async (req: Request, res: Response) => {
         pageTitle: "Thông tin cá nhân"
     });
 }
+
+// [GET]/users/edit
+export const edit = async (req: Request, res: Response) => {
+    res.render("client/page/user/edit", {
+        pageTitle: "Chỉnh sửa thông tin cá nhân"
+    });
+}
+
+// [PATCH]/users/edit
+export const editPatch = async (req: Request, res: Response) => {
+    try {
+        const { fullName, phone, password } = req.body;
+        const updateData: any = { fullName, phone };
+
+        if (password) {
+            updateData.password = md5(password);
+        }
+
+        await User.updateOne({
+            tokenUser: req.cookies.tokenUser
+        },
+            updateData
+        );
+
+        req.flash("success", "Đổi thông tin cá nhân thành công!!!");
+        res.redirect("/");
+    } catch (error) {
+        req.flash("error", "Đã xảy ra lỗi. Vui lòng thử lại!");
+        res.redirect("back");
+    }
+};

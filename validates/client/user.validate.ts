@@ -51,3 +51,20 @@ export const registerPost = (req: Request, res: Response, next: NextFunction) =>
     }
     next();
 }
+
+export const editUser = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body.fullName) {
+        req.flash('error', 'Vui lòng nhập họ tên!');
+        res.redirect("back");
+        return;
+    }
+    if (req.body.password) {
+        if (req.body.password != req.body.confirmPassword) {
+            req.flash('error', 'Xác nhận mật khẩu không trùng khớp');
+            res.redirect("back");
+            return;
+        }
+    }
+
+    next();
+}

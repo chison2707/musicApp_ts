@@ -51,4 +51,6 @@ router.post('/password/otp', controller.otpPasswordPost);
 router.get('/password/reset', controller.resetPassword);
 router.post('/password/reset', validate.resetPasswordPost, controller.resetPasswordPost);
 router.get('/infor', authRequire.requireAuth, controller.infor);
+router.get('/edit', authRequire.requireAuth, controller.edit);
+router.patch('/edit', authRequire.requireAuth, validate.editUser, controller.editPatch);
 exports.userRoutes = router;

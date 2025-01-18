@@ -14,3 +14,11 @@ block main
                 li.list-group-item
                     strong Email:
                     |  #{user.email}
+                if(user.phone)
+                    li.list-group-item
+                        strong Email:
+                        |  #{user.phone}
+                a(
+                    href="/users/edit"
+                    class="btn btn-secondary mt-2 w-100"
+                ) Chỉnh sủa thông tin cá nhân
