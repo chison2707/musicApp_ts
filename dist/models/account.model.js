@@ -32,22 +32,31 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-const config_1 = require("../../config/config");
-const authMiddleware = __importStar(require("../../middlewares/admin/auth.middleware"));
-const auth_route_1 = require("./auth.route");
-const dashboard_route_1 = require("./dashboard.route");
-const topic_route_1 = require("./topic.route");
-const song_route_1 = require("./song.route");
-const upload_route_1 = require("./upload.route");
-const authController = __importStar(require("../../controllers/admin/auth.controller"));
-const adminRoutes = (app) => {
-    const PATH_ADMIN = `/${config_1.systemConfig.prefixAdmin}`;
-    app.get(PATH_ADMIN, authController.login);
-    app.use(`${PATH_ADMIN}/auth`, auth_route_1.authRoutes);
-    app.use(`${PATH_ADMIN}/dashboard`, authMiddleware.requireAuth, dashboard_route_1.dashboardRoutes);
-    app.use(`${PATH_ADMIN}/topics`, authMiddleware.requireAuth, topic_route_1.topicRoutes);
-    app.use(`${PATH_ADMIN}/songs`, authMiddleware.requireAuth, song_route_1.songRoutes);
-    app.use(`${PATH_ADMIN}/upload`, authMiddleware.requireAuth, upload_route_1.uploadRoutes);
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.default = adminRoutes;
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const generate = __importStar(require("../helper/generate"));
+const accountSchema = new mongoose_1.default.Schema({
+    fullName: String,
+    email: String,
+    password: String,
+    token: {
+        type: String,
+        default: generate.generateRandomString(20)
+    },
+    phone: String,
+    avatar: String,
+    // role_id: String,
+    status: String,
+    deleted: {
+        type: Boolean,
+        default: false
+    },
+    deleteAt: Date
+}, {
+    timestamps: true
+});
+const Account = mongoose_1.default.model("Account", accountSchema, "accounts");
+exports.default = Account;
