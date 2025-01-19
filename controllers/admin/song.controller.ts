@@ -3,15 +3,39 @@ import Song from "../../models/song.model";
 import Topic from "../../models/topic.model";
 import Singer from "../../models/singer.model";
 import { systemConfig } from "../../config/config";
+import * as pagination from "../../helper/pagination";
+import searchHelper from "../../helper/search";
 
 export const index = async (req: Request, res: Response) => {
-    const songs = await Song.find({
+    let find = {
         deleted: false
-    });
+    };
+
+    const objSearch = searchHelper(req.query);
+    if (objSearch["regex"]) {
+        find["title"] = objSearch["regex"];
+    }
+    // pagination
+    const countSong = await Song.countDocuments(find);
+    let objPagination = pagination.paganation(
+        {
+            currentPage: 1,
+            limitItems: 5
+        },
+        req.query,
+        countSong
+    );
+    // end pagination
+    const songs = await Song.find(find)
+        .limit(objPagination.limitItems)
+        .skip(objPagination.skip);
+
 
     res.render("admin/pages/songs/index", {
         pageTitle: "Quản lý bài hát",
-        songs: songs
+        songs: songs,
+        keyword: objSearch.keyword,
+        pagination: objPagination
     });
 }
 
@@ -108,4 +132,52 @@ export const editPatch = async (req: Request, res: Response) => {
         _id: id
     }, datasong);
     res.redirect("back");
+}
+
+// [PATCH]/songs/change-status/:status/:id
+export const changeStatus = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const status = req.params.status;
+
+    await Song.updateOne({
+        _id: id
+    }, {
+        status: status
+    });
+    req.flash("success", "Cập nhật trạng thái thành công");
+    res.redirect("back");
+}
+
+// [DELETE]/songs/delete/:id
+export const deleteSong = async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    await Song.deleteOne({
+        _id: id
+    });
+    req.flash("success", "Xóa bài hát thành công");
+    res.redirect("back");
+}
+
+// [DELETE]/songs/detail/:id
+export const detail = async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    const song = await Song.findOne({
+        _id: id
+    });
+    const topic = await Topic.findOne({
+        _id: song.topicId
+    }).select("title");
+
+    const singer = await Singer.findOne({
+        _id: song.singerId
+    }).select("fullName");
+    song["topic"] = topic.title;
+    song["singer"] = singer.fullName;
+
+    res.render("admin/pages/songs/detail", {
+        pageTitle: `${song.title}`,
+        song: song
+    });
 }

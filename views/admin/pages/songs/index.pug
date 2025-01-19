@@ -1,6 +1,11 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/pagination.pug
+include ../../mixins/search.pug
 
 block main
+    +alert-success(3000)
+    +alert-error(3000)
     h1(class="mb-4") #{pageTitle}
 
 
@@ -9,7 +14,7 @@ block main
         .card-body
             .row
                 .col-8
-                
+                    +search(keyword)
                 .col-4.text-right.mb-2
                     a(
                         href=`/${prefixAdmin}/songs/create`
@@ -49,11 +54,17 @@ block main
                                 if (item.status === "active")
                                     a(
                                         href="javascript:;"
+                                        data-status=item.status
+                                        data-id = item.id 
+                                        button-change-status
                                         class="badge badge-success"
                                     ) Hoạt động
                                 else
                                     a(
-                                        href="javascript:;"
+                                         href="javascript:;"
+                                        data-status=item.status
+                                        data-id = item.id 
+                                        button-change-status
                                         class="badge badge-danger"
                                     ) Dừng hoạt động
                             td
@@ -66,7 +77,22 @@ block main
                                 href=`/${prefixAdmin}/songs/edit/${item.id}`
                                 ) Sửa
                                 button(
-                                class="btn btn-danger btn-sm ml-1"
-                                button-delete
-                                data-id=item.id
+                                    class="btn btn-danger btn-sm ml-1"
+                                    button-delete
+                                    data-id=item.id
                                 ) Xóa
+    +pagination(pagination)
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path=`/${prefixAdmin}/songs/delete`
+    )  
+    form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path=`/${prefixAdmin}/songs/change-status`
+    )  
+    block script 
+        script(src="/admin/js/song.js") 
