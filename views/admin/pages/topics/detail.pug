@@ -1,0 +1,23 @@
+extends ../../layouts/default.pug
+
+block main 
+    if topic.title
+        h1.mb-4 #{topic.title}
+    if topic.parent_id
+        div.mb-4 Danh mục cha: <b> #{topic.parent_id}</b>
+    if topic.avatar
+        div.mb-4
+            img(src=topic.avatar style="width: 100px")
+    if topic.status
+        div.mb-4
+            span Trạng thái: 
+            if topic.status === "active"
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+    if topic.description
+        div.mb-4 !{topic.description}
+    a(
+        href=`/${prefixAdmin}/topics/edit/${topic.id}`
+        class="btn btn-warning"
+    ) Chỉnh sửa
