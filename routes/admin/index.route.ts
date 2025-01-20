@@ -8,6 +8,7 @@ import { dashboardRoutes } from "./dashboard.route";
 import { topicRoutes } from "./topic.route";
 import { songRoutes } from "./song.route";
 import { uploadRoutes } from "./upload.route";
+import { singerRoutes } from "./singer.route";
 import * as authController from "../../controllers/admin/auth.controller"
 
 const adminRoutes = (app: Express): void => {
@@ -20,6 +21,7 @@ const adminRoutes = (app: Express): void => {
     app.use(`${PATH_ADMIN}/topics`, authMiddleware.requireAuth, topicRoutes);
     app.use(`${PATH_ADMIN}/songs`, authMiddleware.requireAuth, songRoutes);
     app.use(`${PATH_ADMIN}/upload`, authMiddleware.requireAuth, uploadRoutes);
+    app.use(`${PATH_ADMIN}/singers`, authMiddleware.requireAuth, singerRoutes);
 };
 
 export default adminRoutes;

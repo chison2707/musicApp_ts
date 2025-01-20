@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-success(3000)
+  +alert-error(3000)
+  div.container.py-5
+    h1.text-center.mb-4 Chi Tiết Ca Sĩ #{singer.fullName}
+
+    .card.mx-auto.shadow(style="max-width: 600px;")
+        .row.g-0
+            .col-md-4
+                img.img-fluid.rounded-start(src=singer.avatar, alt=singer.fullName)
+            .col-md-8
+                .card-body
+                    h5.card-title Họ và Tên: 
+                        span#fullName #{singer.fullName}
+
+                    p.card-text Trạng Thái: 
+                        span#status #{singer.status == "active" ? "Hoạt động" : "Dừng hoạt động"}
+                    p.card-text Slug: 
+                        span#slug #{singer.slug}
+
+    .text-center.mt-4
+        a.btn.btn-primary(href=`/${prefixAdmin}/singers/edit/${singer.id}`) Chỉnh sửa
