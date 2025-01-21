@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editPatch = exports.edit = exports.deleteRole = exports.createPost = exports.create = exports.index = void 0;
+exports.detail = exports.permissionsPatch = exports.permissions = exports.editPatch = exports.edit = exports.deleteRole = exports.createPost = exports.create = exports.index = void 0;
 const role_model_1 = __importDefault(require("../../models/role.model"));
 const pagination = __importStar(require("../../helper/pagination"));
 const config_1 = require("../../config/config");
@@ -112,3 +112,39 @@ const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/roles`);
 });
 exports.editPatch = editPatch;
+//[GET] / admin/roles/permissions
+const permissions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let find = {
+        deleted: false
+    };
+    const records = yield role_model_1.default.find(find);
+    res.render("admin/pages/roles/permissions", {
+        pageTitle: "Phân quyền",
+        records: records,
+    });
+});
+exports.permissions = permissions;
+//[Patch] / admin/roles/permissions
+const permissionsPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const permissions = JSON.parse(req.body.permissions);
+        for (const item of permissions) {
+            yield role_model_1.default.updateOne({ _id: item.id }, { permissions: item.permissions });
+        }
+        req.flash('success', `Cập nhật phân quyền thành công!`);
+    }
+    catch (error) {
+        req.flash('error', `Cập nhật phân quyền thất bại!`);
+    }
+    res.redirect("back");
+});
+exports.permissionsPatch = permissionsPatch;
+//[GET] / admin/roles/detail/:id
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const record = yield role_model_1.default.findOne({ _id: req.params.id });
+    res.render("admin/pages/roles/detail", {
+        pageTitle: `Chi tiết ${record.title}`,
+        record: record,
+    });
+});
+exports.detail = detail;
