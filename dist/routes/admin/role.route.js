@@ -32,31 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const generate = __importStar(require("../helper/generate"));
-const accountSchema = new mongoose_1.default.Schema({
-    fullName: String,
-    email: String,
-    password: String,
-    token: {
-        type: String,
-        default: generate.generateRandomString(20)
-    },
-    phone: String,
-    avatar: String,
-    role_id: String,
-    status: String,
-    deleted: {
-        type: Boolean,
-        default: false
-    },
-    deleteAt: Date
-}, {
-    timestamps: true
-});
-const Account = mongoose_1.default.model("Account", accountSchema, "accounts");
-exports.default = Account;
+exports.roleRoutes = void 0;
+const express_1 = require("express");
+const router = (0, express_1.Router)();
+const controller = __importStar(require("../../controllers/admin/role.controller"));
+router.get('/', controller.index);
+router.get('/create', controller.create);
+router.post('/create', controller.createPost);
+router.delete('/delete/:id', controller.deleteRole);
+router.get('/edit/:id', controller.edit);
+router.patch('/edit/:id', controller.editPatch);
+exports.roleRoutes = router;
