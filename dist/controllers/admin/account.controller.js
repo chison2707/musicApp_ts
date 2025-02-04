@@ -45,7 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAccount = exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
+exports.changeStatus = exports.deleteAccount = exports.detail = exports.editPatch = exports.edit = exports.createPost = exports.create = exports.index = void 0;
 const account_model_1 = __importDefault(require("../../models/account.model"));
 const role_model_1 = __importDefault(require("../../models/role.model"));
 const pagination = __importStar(require("../../helper/pagination"));
@@ -176,3 +176,12 @@ const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
 });
 exports.deleteAccount = deleteAccount;
+//[DELETE] / admin/accounts/change-status/:status/:id
+const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const status = req.params.status;
+    const id = req.params.id;
+    yield account_model_1.default.updateOne({ _id: id }, { status: status });
+    req.flash("success", "Cập nhật tài khoản thành công");
+    res.redirect(`/${config_1.systemConfig.prefixAdmin}/accounts`);
+});
+exports.changeStatus = changeStatus;
