@@ -144,3 +144,13 @@ export const deleteAccount = async (req: Request, res: Response) => {
     req.flash("success", "Xóa tài khoản thành công");
     res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
 }
+
+//[DELETE] / admin/accounts/change-status/:status/:id
+export const changeStatus = async (req: Request, res: Response) => {
+    const status = req.params.status;
+    const id = req.params.id;
+    await Account.updateOne({ _id: id }, { status: status });
+
+    req.flash("success", "Cập nhật tài khoản thành công");
+    res.redirect(`/${systemConfig.prefixAdmin}/accounts`);
+}
